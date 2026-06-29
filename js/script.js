@@ -662,3 +662,36 @@ function setupWishesCarousel() {
     track.addEventListener('touchstart', pauseAutoPlay);
     track.addEventListener('touchend', runAutoPlay);
 }
+
+// Ilagay ito sa taas ng script.js
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYNz3NPlx-3Ajg7313QC2r3E3XJnqN2qSa2j-fUZdgwu-qnP1bnrJJb0VF1Yu0Gbiq/exec"; 
+
+async function fetchWishes() {
+    const wallContainer = document.getElementById('guestWallContainer');
+    try {
+        const response = await fetch(SCRIPT_URL);
+        const data = await response.json();
+        
+        // Linisin ang container
+        wallContainer.innerHTML = '';
+        
+        // I-populate ang mga bagong messages
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'wish-card';
+            card.innerHTML = `
+                <p class="wish-msg">"${item.message}"</p>
+                <h4 class="wish-author">— ${item.name}</h4>
+            `;
+            wallContainer.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Error fetching wishes:", error);
+    }
+}
+
+// Tawagin ang function kapag nag-load ang page
+document.addEventListener("DOMContentLoaded", () => {
+    // ... ibang existing setup functions mo ...
+    fetchWishes(); // <--- Dagdag ito
+});
