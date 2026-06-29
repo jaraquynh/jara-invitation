@@ -483,23 +483,24 @@ width:100%;
    FINE ART MATTE CARD FRAME (Para sa Gemini_Generated_Image_rm7s8frm7s8frm7s.png)
    ========================================================================== */
 .family-image-container {
-    max-width: 550px;             /* Bahagyang nilakihan para sa landscape photo alignment */
+    max-width: 350px;             /* Portrait orientation: mas makitid kaysa landscape */
     margin: 0 auto;
-    padding: 12px;                /* Nagsisilbing malinis na puting passe-partout border */
+    padding: 10px;
     background: var(--bg-white);
     
-    /* Banayad na soft rounded corners para hindi magmukhang masyadong matalas */
-    border-radius: 12px;          
+    /* BOHO ARCH SHAPE */
+    border-top-left-radius: 175px; /* Half of 350px */
+    border-top-right-radius: 175px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
     
-    /* Premium elegant borders at banayad na shadow ng totoong papel */
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(158, 130, 67, 0.05); 
-    
-    transition: transform 0.3s ease;
+    box-shadow: 0 15px 35px rgba(158, 130, 67, 0.08);
+    transition: transform 0.4s ease;
 }
 
 .family-image-container:hover {
-    transform: translateY(-3px);  /* Banayad na pag-angat kapag tinapatan ng mouse */
+    transform: scale(1.02);
 }
 
 .family-image {
@@ -507,11 +508,14 @@ width:100%;
     height: auto;
     display: block;
     
-    /* Sumusunod sa panloob na kurbada ng lalagyan */
-    border-radius: 6px;           
+    /* Siguraduhing sumunod ang image sa arch shape */
+    border-top-left-radius: 165px;
+    border-top-right-radius: 165px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    
     object-fit: cover;
 }
-
 /* ==========================================================================
    TIMELINE SECTION (Jara's First Year)
    ========================================================================== */
