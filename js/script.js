@@ -313,39 +313,42 @@ function setupTimelineCarousel() {
 }
 
 // ==========================================================================
-// 5. FETCH WISHES AND AUTO-SCROLL CAROUSEL
+// ==========================================================================
+// 5. WISHES FOR JARA - FETCH MULA GOOGLE SHEETS
 // ==========================================================================
 async function fetchWishes() {
     const wallContainer = document.getElementById('guestWallContainer');
     if (!wallContainer) return;
     
     try {
-        const response = await fetch(SCRIPT_URL);
+        const response = await fetch(scriptURL);
         const data = await response.json();
         
+        // Linisin ang container bago lagyan ng bago
         wallContainer.innerHTML = '';
         
-        // Dito natin sasalain ang data
-        data.forEach(item => {
-            // Kunin ang message at linisin ang spaces at quotes
-            let msg = item.message ? item.message.toString().trim() : "";
-            
-            // Tanggalin ang mga literal na double quotes kung meron man
-            msg = msg.replace(/^"|"$/g, ''); 
-            
-            // I-check kung may laman talaga (hindi lang empty, hindi lang quotes)
-            if (msg.length > 0 && msg !== '""' && msg !== '""') {
+        // Gamitin ang .filter para tanggalin ang mga walang laman
+        const validWishes = data.filter(item => {
+            const msg = item.message ? item.message.toString().trim() : "";
+            // Tumatanggap lang kung may laman na hindi quotation marks lang
+            return msg !== "" && msg !== '""';
+        });
+
+        if (validWishes.length === 0) {
+            wallContainer.innerHTML = '<p>No wishes yet. Be the first to greet Jara!</p>';
+        } else {
+            validWishes.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'wish-card';
                 card.innerHTML = `
-                    <p class="wish-msg">"${msg}"</p>
+                    <p class="wish-msg">"${item.message}"</p>
                     <h4 class="wish-author">— ${item.name}</h4>
                 `;
                 wallContainer.appendChild(card);
-            }
-        });
+            });
+        }
         
-        // I-initiate ang carousel animation matapos malinis ang data
+        // I-initiate ang carousel animation matapos mailagay ang data
         setupWishesCarousel();
         
     } catch (error) {
