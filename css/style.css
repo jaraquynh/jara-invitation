@@ -1463,3 +1463,50 @@ transition-delay:.45s;
 transition-delay:.6s;
 
 }
+
+
+/* Styling para sa custom PNG icon mo */
+.custom-music-icon {
+    width: 50px;       /* Laki ng icon mo */
+    height: 50px;
+    object-fit: contain;
+}
+/* ==========================================================================
+   FLOATING MUSIC BUTTON (FIXED BOTTOM RIGHT)
+   ========================================================================== */
+#musicToggle {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 99999 !important; /* Pinakamataas para hindi matakpan ng text/images */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #8fa086;  Sage green background 
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#musicToggle:hover {
+    transform: scale(1.1);
+    background-color: #7a8b72;
+}
+
+#musicToggle.music-playing {
+    background-color: #c4a661; /* Gold pag naka-play */
+}
+
+/* Siguraduhing sakto ang laki ng custom icon mo sa loob ng bilog */
+.custom-music-icon {
+    width: 25px !important;
+    height: 25px !important;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+}
