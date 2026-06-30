@@ -318,16 +318,22 @@ function setupTimelineCarousel() {
 async function fetchWishes() {
     const wallContainer = document.getElementById('guestWallContainer');
     if (!wallContainer) return;
-
+    
     try {
-        const response = await fetch(scriptURL);
+        const response = await fetch(SCRIPT_URL);
         const data = await response.json();
         
-        // Linisin ang container
         wallContainer.innerHTML = '';
         
-        // I-populate ang mga bagong messages
-        data.forEach(item => {
+        // I-filter ang data bago i-display
+        // Dito natin sisiguraduhin na may laman talaga ang message
+        const filteredWishes = data.filter(item => {
+            const msg = item.message ? item.message.toString().trim() : "";
+            // Tumatanggap lang kung ang message ay hindi null at hindi empty string
+            return msg !== "" && msg !== '""'; 
+        });
+
+        filteredWishes.forEach(item => {
             const card = document.createElement('div');
             card.className = 'wish-card';
             card.innerHTML = `
@@ -336,8 +342,8 @@ async function fetchWishes() {
             `;
             wallContainer.appendChild(card);
         });
-        
-        // Tawagin ang carousel settings MATAPOS ma-load ang laman
+
+        // Tawagin ang carousel settings MATAPOS ma-filter at ma-load ang laman
         setupWishesCarousel();
 
     } catch (error) {
