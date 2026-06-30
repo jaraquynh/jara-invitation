@@ -325,27 +325,29 @@ async function fetchWishes() {
         
         wallContainer.innerHTML = '';
         
-        // I-filter ang data bago i-display
-        // Dito natin sisiguraduhin na may laman talaga ang message
-        const filteredWishes = data.filter(item => {
-            const msg = item.message ? item.message.toString().trim() : "";
-            // Tumatanggap lang kung ang message ay hindi null at hindi empty string
-            return msg !== "" && msg !== '""'; 
+        // Dito natin sasalain ang data
+        data.forEach(item => {
+            // Kunin ang message at linisin ang spaces at quotes
+            let msg = item.message ? item.message.toString().trim() : "";
+            
+            // Tanggalin ang mga literal na double quotes kung meron man
+            msg = msg.replace(/^"|"$/g, ''); 
+            
+            // I-check kung may laman talaga (hindi lang empty, hindi lang quotes)
+            if (msg.length > 0 && msg !== '""' && msg !== '""') {
+                const card = document.createElement('div');
+                card.className = 'wish-card';
+                card.innerHTML = `
+                    <p class="wish-msg">"${msg}"</p>
+                    <h4 class="wish-author">— ${item.name}</h4>
+                `;
+                wallContainer.appendChild(card);
+            }
         });
-
-        filteredWishes.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'wish-card';
-            card.innerHTML = `
-                <p class="wish-msg">"${item.message}"</p>
-                <h4 class="wish-author">— ${item.name}</h4>
-            `;
-            wallContainer.appendChild(card);
-        });
-
-        // Tawagin ang carousel settings MATAPOS ma-filter at ma-load ang laman
+        
+        // I-initiate ang carousel animation matapos malinis ang data
         setupWishesCarousel();
-
+        
     } catch (error) {
         console.error("Error fetching wishes:", error);
     }
